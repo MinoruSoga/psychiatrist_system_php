@@ -11,42 +11,39 @@ $patient = new Patient;
   <?php include('head.php'); ?>
   <body>
     <?php include('header.php'); ?>
-    <h1>病名</h1>
-    
-    <form action="" method="post" class="form-inline">
-    <div class="form-group">
-    <label for="selectPatient">患者名</label>
-    <select name="patient_id" class="form-control" id="selectPatient">
-    <option>Please select</option>
-    <?php 
-    $result = $patient->get_patient();
-    foreach($result as $row){
-      ?>
-      <option value="<?php echo $row['id']?>"><?php echo $row['patient_name']?></option>
-      <?php
-        }
-      ?>
+    <div class="container-md mt-3">
+      <form action="" method="post" class="form-inline">
+        <div class="form-group">
+          <label for="selectPatient">患者名</label>
+          <select name="patient_id" class="form-control" id="selectPatient">
+            <option>Please select</option>
+            <?php 
+              $result = $patient->get_patient();
+              foreach($result as $row){
+            ?>
+            <option value="<?php echo $row['id']?>"><?php echo $row['patient_name']?></option>
+            <?php
+              }
+            ?>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="selectDisease">病名</label>
+          <select name="disease_id" class="form-control" id="selectDisease">
+            <option>Please select</option>
+            <?php 
+              $result = $disease->get_disease();
+              foreach($result as $row){
+            ?>
+            <option value="<?php echo $row['id']?>"><?php echo $row['disease_name']?></option>
+            <?php
+              }
+            ?>
+          </select>
+        </div>
+        <input type="submit" name="next"class="btn btn-outline-primary" value="次へ" />
+      </form>
 
-    </select>
-  </div>
-    <div class="form-group">
-    <label for="selectDisease">病名</label>
-    <select name="disease_id" class="form-control" id="selectDisease">
-    <option>Please select</option>
-    <?php 
-    $result = $disease->get_disease();
-    foreach($result as $row){
-      ?>
-      <option value="<?php echo $row['id']?>"><?php echo $row['disease_name']?></option>
-      <?php
-        }
-      ?>
-    </select>
-  </div>
-    <input type="submit" name="next"class="btn btn-outline-primary" value="次へ" />
-    </form>
-  </body>
-</html>
 <?php
  if(isset($_POST['next'])){
    $patient_id = $_POST['patient_id'];
@@ -55,62 +52,56 @@ $patient = new Patient;
  
  ?>
   <form action="" method="post">
-  <input type="hidden" name="patient_id" value="<?php echo $patient_id?>">
-  <input type="hidden" name="disease_id" value="<?php echo $disease_id?>">
-  <textarea class="form-control" name="answer[0]" placeholder="備考"></textarea>
-       <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">質問</th>
-      <th scope="col">答え</th>
-    </tr>
-  </thead>
-  <tbody>
-  
-  
-  <?php
-   if($result){
-     ?>
-     <?php
-
-     foreach($result as $row){
-       
-       ?>
-    <tr>
-    <?php 
-    if ($row['question_id'] == 0){
-    ?>
-      <th scope="row"><?php echo $row['question'];?></th>
-    <?php }else{?>
-      <th scope="row" class="pl-5"><?php echo $row['question'];?></th>
-    <?php }?>
-      <?php if($row['answer'] == 'check'){
+    <input type="hidden" name="patient_id" value="<?php echo $patient_id?>">
+    <input type="hidden" name="disease_id" value="<?php echo $disease_id?>">
+    <textarea class="form-control" name="answer[0]" placeholder="備考"></textarea>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">質問</th>
+            <th scope="col">答え</th>
+          </tr>
+        </thead>
+        <tbody>
+        <?php
+          if($result){
+          foreach($result as $row){
         ?>
-      <td>
-      <input type="radio" name="answer[<?php echo $row['id'];?>]" value="Yes"> はい
-      <input type="radio" name="answer[<?php echo $row['id'];?>]" value="No"> いいえ
-      <input type="hidden" name="q_num[<?php echo $row['id'];?>]" value="<?php echo $row['id'];?>">
-      </td>
-    </tr>
-      <?php } else{?>
+        <tr>
+          <?php 
+            if ($row['question_id'] == 0){
+          ?>
+          <th scope="row"><?php echo $row['question'];?></th>
+          <?php
+            }else{
+          ?>
+          <th scope="row" class="pl-5"><?php echo $row['question'];?></th>
+          <?php
+            }
+            if($row['answer'] == 'check'){
+          ?>
+          <td>
+            <input type="radio" name="answer[<?php echo $row['id'];?>]" value="Yes"> はい
+            <input type="radio" name="answer[<?php echo $row['id'];?>]" value="No"> いいえ
+            <input type="hidden" name="q_num[<?php echo $row['id'];?>]" value="<?php echo $row['id'];?>">
+          </td>
+        </tr>
+        <?php } else{?>
         <td>
-      <input type="text" name="answer[<?php echo $row['id'];?>]" placeholder="freetext">
-      </td>
-      <?php }?>
-    <?php
-     }
-     ?>
-     <?php
+          <input type="text" name="answer[<?php echo $row['id'];?>]" placeholder="freetext">
+        </td>
+        <?php 
+              }
+            }
+          }
+        ?>
+      </tbody>
+    </table>
+    <input type="submit" name="submit" value="保存" class="btn btn-outline-success"/>
+  </form>
+  <?php 
     }
-  
-?>
-
-
-  </tbody>
-</table>
-<input type="submit" name="submit" value="保存" class="btn btn-outline-success"/>
-</form>
-  <?php } ?>
+  ?>
 <?php
  if(isset($_POST['submit'])){
    $patient_id = $_POST['patient_id'];
@@ -120,3 +111,6 @@ $patient = new Patient;
    $check_sheet->insert($patient_id, $disease_id, $answer, $q_num);
  }
 ?>
+    </div>
+  </body>
+</html>

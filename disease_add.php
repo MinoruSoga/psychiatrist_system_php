@@ -7,19 +7,21 @@ $disease = new Disease;
   <?php include('head.php'); ?>
   <body>
     <?php include('header.php'); ?>
-    <form action="" method="post">
-    <div class="form-row">
-      <div class="col-1">
-        <label>病名</label>
+    <div class="container-md mt-3">
+      <form action="" method="post">
+      <div class="form-row">
+        <div class="col-1">
+          <label>病名</label>
+        </div>
+        <div class="col-5">
+          <input type="text" class="form-control" name="disease_name" placeholder="病名を入力して下さい" required />
+        </div>
+        <div class="col">
+          <input type="submit" name="submit" value="追加" class="btn btn-outline-success"/>
+        </div>
       </div>
-      <div class="col-5">
-        <input type="text" class="form-control" name="disease_name" placeholder="病名を入力して下さい" required />
-      </div>
-      <div class="col">
-        <input type="submit" name="submit" value="追加" class="btn btn-outline-success"/>
-      </div>
+      </form>
     </div>
-    </form>
   </body>
 </html>
 <?php

@@ -17,47 +17,46 @@ $disease_name = $disease->get_disease_name($disease_id);
   <?php include('head.php'); ?>
   <body>
     <?php include('header.php'); ?>
-    <h1><?php echo $patient_row['patient_name'];?>さん</h1>
-    <h1><?php echo $disease_name['disease_name'];?></h1>
-  <?php 
-  $answer = $check_sheet->get_answer_freetext($sheetrecord_id);
-  ?>
-  <p class="border"><?php echo $answer['answer']?></p>
-
-
-  <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">質問</th>
-      <th scope="col">答え</th>
-    </tr>
-  </thead>
-  <tbody>
-  <?php 
-    $result = $check_sheet->get_question($disease_id);
-    foreach($result as $row){
-      $question_id = $row['id'];
-      $answer = $check_sheet->get_answer($sheetrecord_id, $question_id);
+    <div class="container-md mt-3">
+      <h3><?php echo $patient_row['patient_name'];?>  さん</h3>
+      <h3><?php echo $disease_name['disease_name'];?></h3>
+      <?php 
+      $answer = $check_sheet->get_answer_freetext($sheetrecord_id);
       ?>
-    <tr>
-    <?php 
-    if($row['question_id'] == 0){
-    ?>
-      <th scope="row"><?php echo $row['question']?></th>
-    <?php
-    }else{
-    ?>
-    <th scope="row" class="pl-5"><?php echo $row['question']?></th>
-    <?php
-    }
-    ?>
-      <td><?php echo $answer['answer']?></td>
-    
-    </tr>
-    <?php
-    }
-  ?>
-  </tbody>
-</table>
-</body>
+      <p class="border"><?php echo $answer['answer']?></p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">質問</th>
+            <th scope="col">答え</th>
+          </tr>
+        </thead>
+        <tbody>
+        <?php 
+          $result = $check_sheet->get_question($disease_id);
+          foreach($result as $row){
+            $question_id = $row['id'];
+            $answer = $check_sheet->get_answer($sheetrecord_id, $question_id);
+        ?>
+        <tr>
+          <?php 
+            if($row['question_id'] == 0){
+          ?>
+          <th scope="row"><?php echo $row['question']?></th>
+          <?php
+            }else{
+          ?>
+          <th scope="row" class="pl-5"><?php echo $row['question']?></th>
+          <?php
+            }
+          ?>
+          <td><?php echo $answer['answer']?></td>
+        </tr>
+        <?php
+        }
+        ?>
+        </tbody>
+      </table>
+    </div>
+  </body>
 </html>
