@@ -3,9 +3,9 @@ require_once 'Config.php';
 
 class CheckSheet extends Config{
   
-  public function insert($patient_id, $disease_id, $answer, $q_num){
+  public function insert($patient_id, $disease_id, $answer, $q_num, $login_id){
     $today = date('Y-m-d');
-    $sql = "INSERT INTO sheetrecord(patient_id, disease_id, created_at) VALUES('$patient_id', '$disease_id', '$today')";
+    $sql = "INSERT INTO sheetrecord(patient_id, disease_id, created_at, user_id) VALUES('$patient_id', '$disease_id', '$today', '$login_id')";
     $result = $this->conn->query($sql);
     $sheetrecord_id = $this->conn->insert_id;
     if($result){

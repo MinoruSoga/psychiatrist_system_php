@@ -1,34 +1,37 @@
-<?php 
-require_once 'class/Patient.php';
-$patient = new Patient;
+<?php
+require_once 'class/User.php';
 ?>
 <!DOCTYPE html>
-<html lang="ja">
-  <?php include('head.php'); ?>
-  <body>
-    <?php include('header.php'); ?>
-    <div class="container-md mt-3">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">名前</th>
-            <th scope="col">生年月日</th>
-          </tr>
-        </thead>
-        <tbody>
-        <?php 
-          $result = $patient->get_patient();
-          foreach($result as $row){
-        ?>
-        <tr>
-          <th scope="row"><a href="patient_detail.php?patient_id=<?php echo $row['id']?>"><?php echo $row['patient_name']?></a></th>
-          <td><?php echo $row['birthday']?></td>
-        </tr>
-        <?php
-          }
-        ?>
-        </tbody>
-      </table>
-    </div>
-  </body>
+<html>
+
+
+<head>
+	<title>Login</title>
+	<?php include('head.php'); ?>
+</head>
+	<!--font_awesome_icons-->
+  <body class="text-center">
+    <form class="form-signin w-50 m-auto pt-5" action="" method="post">
+
+			<h1 class="h3 mb-3 font-weight-normal">Please login</h1>
+			<label for="inputName" class="sr-only">名前</label>
+			<input type="text" id="inputName" class="form-control" placeholder="名前" name="name" required autofocus>
+
+			<label for="inputPassword" class="sr-only">Password</label>
+			<input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" name="login">Log in</button>
+			<p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+		</form>
+	</body>
+
 </html>
+
+<?php
+  if(isset($_POST['login'])){
+    $name = $_POST['name'];
+		$password = $_POST['password'];
+		$user = new User;
+    $user->login($name, $password);
+  }
+
+?>

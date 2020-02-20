@@ -5,6 +5,8 @@ require_once 'class/Patient.php';
 $check_sheet = new CheckSheet;
 $disease = new Disease;
 $patient = new Patient;
+session_start();
+$login_id = $_SESSION['login_id'];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -18,7 +20,7 @@ $patient = new Patient;
           <select name="patient_id" class="form-control" id="selectPatient">
             <option>Please select</option>
             <?php 
-              $result = $patient->get_patient();
+              $result = $patient->get_patient($login_id);
               foreach($result as $row){
             ?>
             <option value="<?php echo $row['id']?>"><?php echo $row['patient_name']?></option>
@@ -101,6 +103,7 @@ $patient = new Patient;
         ?>
       </tbody>
     </table>
+    <input type="hidden" name="login_id" value="<?php echo $login_id?>"/>
     <input type="submit" name="submit" value="保存" class="btn btn-outline-success"/>
   </form>
   <?php 
@@ -112,7 +115,8 @@ $patient = new Patient;
    $disease_id = $_POST['disease_id'];
    $answer = $_POST['answer'];
    $q_num = $_POST['q_num'];
-   $check_sheet->insert($patient_id, $disease_id, $answer, $q_num);
+   $login_id = $_POST['login_id'];
+   $check_sheet->insert($patient_id, $disease_id, $answer, $q_num, $login_id);
  }
 ?>
     </div>

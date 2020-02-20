@@ -3,8 +3,8 @@ require_once 'Config.php';
 
 class Patient extends Config{
   
-  public function insert($patient_name,$gender, $age, $birthday){
-    $sql = "INSERT INTO patient(patient_name, gender, age, birthday) VALUES('$patient_name', '$gender', '$age', '$birthday')";
+  public function insert($patient_name,$gender, $birthday, $login_id){
+    $sql = "INSERT INTO patient(patient_name, gender, birthday, user_id) VALUES('$patient_name', '$gender', '$birthday', '$login_id')";
     $result = $this->conn->query($sql);
     if($result){
       $this->redirect_js('patient_show.php');
@@ -13,9 +13,9 @@ class Patient extends Config{
     }
   }
 
-  public function get_patient(){
+  public function get_patient($login_id){
     //query
-    $sql = "SELECT * FROM patient";
+    $sql = "SELECT * FROM patient WHERE user_id=$login_id";
     $result = $this->conn->query($sql);
 
     //initialize an array

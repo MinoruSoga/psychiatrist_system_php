@@ -11,6 +11,8 @@ $disease_id = $_GET['disease_id'];
 $sheetrecord_id = $_GET['sheetrecord_id'];
 $patient_row = $patient->get_patient_name($patient_id);
 $disease_name = $disease->get_disease_name($disease_id);
+session_start();
+$login_id = $_SESSION['login_id'];
 ?>
 <!DOCTYPE html>
 <html lang="ja">

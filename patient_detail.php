@@ -7,6 +7,8 @@ $disease = new Disease;
 $check_sheet = new CheckSheet;
 $patient_id = $_GET['patient_id'];
 $patient_row = $patient->get_patient_name($patient_id);
+session_start();
+$login_id = $_SESSION['login_id'];
 ?>
 <!DOCTYPE html>
 <html lang="ja">

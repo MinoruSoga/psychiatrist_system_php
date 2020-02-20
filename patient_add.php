@@ -1,6 +1,8 @@
 <?php
 require_once 'class/Patient.php';
 $patient = new Patient;
+session_start();
+$login_id = $_SESSION['login_id'];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -11,6 +13,7 @@ $patient = new Patient;
       <form action="" method="post">
         <div class="form-row">
           <div class="col-4">
+          <input type="hidden" name="login_id" value="<?php echo $login_id?>">
             <input type="text" name="patient_name" class="form-control" placeholder="名前">
           </div>
           <div class="col">
@@ -22,9 +25,6 @@ $patient = new Patient;
               <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="女">
               <label class="form-check-label" for="inlineRadio2">女</label>
             </div>
-          </div>
-          <div class="col-1">
-            <input type="number" name="age" class="form-control" placeholder="年齢">
           </div>
           <div class="col-4">
             <input type="date" name="birthday" class="form-control" placeholder="生年月日">
@@ -39,8 +39,8 @@ $patient = new Patient;
  if(isset($_POST['submit'])){
    $patient_name = $_POST['patient_name'];
    $gender = $_POST['gender'];
-   $age = $_POST['age'];
    $birthday = $_POST['birthday'];
-   $patient->insert($patient_name, $gender, $age, $birthday);
+   $login_id = $_POST['login_id'];
+   $patient->insert($patient_name, $gender, $birthday, $login_id);
  }
 ?>
