@@ -21,6 +21,14 @@ $login_id = $_SESSION['login_id'];
     <?php include('header.php'); ?>
     <div class="container-md mt-3">
       <h3><?php echo $patient_row['patient_name'];?>  さん</h3>
+      <form method="POST" action="pdf.php">
+        <input type="hidden" name="patient_name" value="<?php echo $patient_row['patient_name']; ?>">
+        <input type="hidden" name="question_id" value="<?php echo $question_id; ?>">
+        <input type="hidden" name="disease_name" value="<?php echo $disease_name['disease_name']; ?>">
+        <input type="hidden" name="disease_id" value="<?php echo $disease_id; ?>">
+        <input type="hidden" name="sheetrecord_id" value="<?php echo $sheetrecord_id?>">
+        <button type="submit" class="btn btn-outline-info float-right">PDF作成</button>
+      </form>
       <h3><?php echo $disease_name['disease_name'];?></h3>
       <?php 
       $answer = $check_sheet->get_answer_freetext($sheetrecord_id);
