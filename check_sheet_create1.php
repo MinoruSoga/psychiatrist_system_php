@@ -86,6 +86,10 @@ $patient = new Patient;
             <input type="hidden" name="q_num[<?php echo $row['id'];?>]" value="<?php echo $row['id'];?>">
           </td>
         </tr>
+        <?php } elseif($row['answer'] == 'none'){?>
+          <td>
+          <input type="hidden" name="answer[<?php echo $row['id'];?>]">
+        </td>
         <?php } else{?>
         <td>
           <input type="text" name="answer[<?php echo $row['id'];?>]" placeholder="freetext">
