@@ -5,13 +5,12 @@ class CheckSheet extends Config{
   
   public function insert($patient_id, $disease_id, $answer, $q_num){
     $today = date('Y-m-d');
-
     $sql = "INSERT INTO sheetrecord(patient_id, disease_id, created_at) VALUES('$patient_id', '$disease_id', '$today')";
     $result = $this->conn->query($sql);
     $sheetrecord_id = $this->conn->insert_id;
     if($result){
-      for($i = 1; $i <= count($answer); ++$i) {
-        $sql2 = "INSERT INTO checksheet(sheetrecord_id, question_id, answer) VALUES( '$sheetrecord_id', '$q_num[$i]', '$answer[$i]')";
+      foreach ($q_num as $num){
+        $sql2 = "INSERT INTO checksheet(sheetrecord_id, question_id, answer) VALUES( '$sheetrecord_id', '$num', '$answer[$num]')";
         $result2 = $this->conn->query($sql2);
       }
       $sql3 = "INSERT INTO checksheet(sheetrecord_id, question_id, answer) VALUES( '$sheetrecord_id', '0', '$answer[0]')";
